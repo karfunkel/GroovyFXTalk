@@ -198,6 +198,7 @@ keyboard: {
 }
 
 task toPdf << {
+/*
     final TYPES = [
             "css" : "text/css",
             "gif" : "image/gif",
@@ -212,6 +213,7 @@ task toPdf << {
     def root = "build/asciidoc/revealjs"
     def server = HttpServer.create(new InetSocketAddress(port), 0)
     server.createContext("/", { HttpExchange exchange ->
+        println "-"*20
         try {
             if (!"GET".equalsIgnoreCase(exchange.requestMethod)) {
                 exchange.sendResponseHeaders(405, 0)
@@ -241,14 +243,15 @@ task toPdf << {
     } as HttpHandler)
     server.start()
     println "started simple web server on port ${port}"
-
-    def cmd = "docker run --rm --net=host -v $project.buildDir/asciidoc/revealjs:/pwd astefanutti/decktape reveal http://localhost:$port/index.html?fragments=false /pwd/${project.name}.pdf"
+*/
+    def cmd = "docker run --rm --net=host -v $project.buildDir/asciidoc/revealjs:/pwd astefanutti/decktape reveal /pwd/index.html /pwd/${project.name}.pdf"
     Process proc = cmd.execute()
-    println "exporting to pdf"
+    println "exporting to pdf ..."
     proc.waitForProcessOutput(System.out, System.err)
     proc.waitFor()
-    server.stop(0)
-    println "stopped simple web server on port ${port}"
+    println "... finished"
+//    server.stop(0)
+//    println "stopped simple web server on port ${port}"
 }
 
 asciidoctor.finalizedBy configureChalkboard
