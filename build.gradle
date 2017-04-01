@@ -1,0 +1,254 @@
+import org.ajoberstar.grgit.*
+import com.sun.net.httpserver.*
+import groovy.json.*
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'uk.co.cacoethes:lazybones-gradle:1.2.4'
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+        classpath 'com.github.jruby-gradle:jruby-gradle-plugin:1.4.0'
+        classpath 'org.ysb33r.gradle:vfs-gradle-plugin:1.0'
+        classpath 'commons-httpclient:commons-httpclient:3.1'
+        classpath 'org.ajoberstar:gradle-git:1.7.0'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
+    }
+}
+
+plugins {
+    id 'org.asciidoctor.convert' version '1.5.3'
+    id 'com.github.jruby-gradle.base' version '1.2.1'
+}
+
+apply plugin: 'com.github.jruby-gradle.base'
+apply plugin: 'org.ysb33r.vfs'
+apply plugin: 'groovy'
+apply plugin: 'org.asciidoctor.convert'
+apply plugin: 'uk.co.cacoethes.lazybones-templates'
+apply plugin: 'idea'
+apply plugin: 'com.github.ben-manes.versions'
+
+version = '1.0.0-SNAPSHOT'
+
+ext {
+    revealjsVersion = '3.4.1'
+    revealjs_version = '3.4.1'            // TODO
+    asciidoctorBackendVersion = 'master'
+    downloadDir = new File(buildDir, 'download')
+    templateDir = new File(downloadDir, 'templates')
+    revealjsDir = new File(downloadDir, 'reveal.js')
+
+    javafxHome = System.env['JAVAFX_HOME']
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    gems 'rubygems:asciidoctor-diagram:1.4.0'
+    gems 'rubygems:slim:3.0.6'
+    gems 'rubygems:thread_safe:0.3.5'
+
+    compile 'org.codehaus.groovy:groovy-all:2.4.10'
+    compile 'org.groovyfx:groovyfx:8.0.0'
+    compile 'org.controlsfx:controlsfx:8.40.12'
+    compile 'com.miglayout:miglayout-javafx:5.0'
+    compile files("${javafxHome}/rt/lib/jfxrt.jar")
+}
+
+idea {
+    project {
+        ipr {
+            withXml { provider ->
+                def node = provider.asNode()
+                //configure git support for the project in idea
+                node.component.find { it.'@name' == 'VcsDirectoryMappings' }?.mapping[0].'@vcs' = 'Git'
+            }
+        }
+    }
+}
+
+task download << {
+    mkdir downloadDir
+    vfs {
+        //cp "zip:https://github.com/asciidoctor/asciidoctor-reveal.js/archive/${asciidoctorBackendVersion}.zip!asciidoctor-reveal.js-${asciidoctorBackendVersion}",
+        //        templateDir, recursive: true, overwrite: true
+        cp "zip:https://github.com/hakimel/reveal.js/archive/${revealjsVersion}.zip!reveal.js-${revealjsVersion}", revealjsDir, recursive: true, overwrite: true
+    }
+
+    if (!templateDir.exists()) {
+        Grgit.clone(dir: templateDir, uri: 'https://github.com/asciidoctor/asciidoctor-reveal.js')
+    }
+}
+
+download {
+    description "Download extra revealjs resources"
+    outputs.dir templateDir
+    outputs.dir revealjsDir
+}
+
+asciidoctorj {
+    version = '1.5.4'
+}
+
+asciidoctor {
+    sources {
+        include 'index.adoc'
+        include 'master.adoc'
+    }
+
+    /*
+    gemPath = jrubyPrepareGems.outputDir
+    requires = ['asciidoctor-diagram']
+    */
+
+    resources {
+        from(downloadDir) {
+            include 'reveal.js/**'
+        }
+        from(sourceDir) {
+            include 'images/**'
+            include 'theme/**'
+            include 'reveal.js/**'
+        }
+    }
+
+    backends 'revealjs'
+
+    attributes 'build-gradle': file('build.gradle'),
+            'sourcedir': project.sourceSets.main.groovy.srcDirs[0],
+            'endpoint-url': 'http://example.org',
+            //'source-highlighter': 'coderay',
+            'source-highlighter': 'highlightjs',
+            'imagesoutdir': 'images',
+            'imagesdir': './images',
+            'toc': 'left',
+            'icons': 'font',
+            'setanchors': 'true',
+            'idprefix': '',
+            'idseparator': '-',
+            'docinfo1': 'true',
+            'revealjs_width': 1024,
+            'revealjs_height': 700,
+            //'revealjs_theme': 'black',
+            'revealjs_customtheme': 'theme/cc.css',
+            'revealjs_transition': 'linear',
+            'revealjs_history': 'true',
+            'revealjs_slideNumber': 'true',
+            'revealjs_center': 'false',
+            'highlightjs-theme': 'reveal.js/plugin/highlight/styles/atelier-forest.light.css',
+            'linkattrs': true,
+            'experimental': true
+
+    options template_dirs: [new File(templateDir, 'templates/slim').absolutePath]
+
+    dependsOn download
+}
+
+task publish(type: GradleBuild) {
+    buildFile = 'publish.gradle'
+    tasks = ['publishGhages']
+    System.setProperty('jna.nosys', "true")
+}
+
+task configureChalkboard << {
+    File indexFile = file("$buildDir/asciidoc/revealjs/index.html")
+    def init = indexFile.text
+    def pattern = /(?ms)Reveal\.initialize\((\{.*\})\);<\\/script>/
+    def json = (init =~ pattern)[0][1]
+
+    json = json.readLines().collect { line ->
+        switch (line) {
+            case { it.trim() == '{' }:
+                return """{
+chalkboard: { 
+    src: null,
+    readOnly: false, 
+    toggleChalkboardButton: { left: "30px", bottom: "30px", top: "auto", right: "auto" },
+    toggleNotesButton: { left: "60px", bottom: "30px", top: "auto", right: "auto" },
+    transition: 0,
+    theme: "chalkboard",
+    // configuration options for notes canvas and chalkboard
+    color: [ 'rgba(255,136,0,0.5)', 'rgba(255,136,0,0.5)' ],
+    background: [ 'rgba(127,127,127,0.1)' , 'rgba(127,127,127,0.1)' ],
+    pen:  [ 'url(reveal.js/plugin/chalkboard/img/boardmarker.png), auto', 'url(reveal.js/plugin/chalkboard/img/chalk.png), auto' ],
+},"""
+            case { it.trim() == 'dependencies: [' }:
+                return line + '\n' + "{ src: 'reveal.js/plugin/chalkboard/chalkboard.js' },"
+            case { it.trim() == 'keyboard: true,' }:
+                return """\
+keyboard: {
+    67: function() { RevealChalkboard.toggleNotesCanvas() },    // toggle notes canvas when 'c' is pressed
+    66: function() { RevealChalkboard.toggleChalkboard() },     // toggle chalkboard when 'b' is pressed
+    46: function() { RevealChalkboard.clear() },                // clear chalkboard when 'DEL' is pressed
+     8: function() { RevealChalkboard.reset() },                // reset chalkboard data on current slide when 'BACKSPACE' is pressed
+    68: function() { RevealChalkboard.download() },             // downlad recorded chalkboard drawing when 'd' is pressed
+},"""
+            default:
+                return line
+        }
+    }
+
+    indexFile.text = init.replaceAll(pattern, """Reveal.initialize(${json.join('\n')});</script></body></html>
+""")
+}
+
+task toPdf << {
+    final TYPES = [
+            "css" : "text/css",
+            "gif" : "image/gif",
+            "html": "text/html",
+            "jpg" : "image/jpeg",
+            "js"  : "application/javascript",
+            "png" : "image/png",
+            "svg" : "image/svg+xml",
+    ]
+
+    def port = 18181
+    def root = "build/asciidoc/revealjs"
+    def server = HttpServer.create(new InetSocketAddress(port), 0)
+    server.createContext("/", { HttpExchange exchange ->
+        try {
+            if (!"GET".equalsIgnoreCase(exchange.requestMethod)) {
+                exchange.sendResponseHeaders(405, 0)
+                exchange.responseBody.close()
+                return
+            }
+            def path = exchange.requestURI.path
+            println "GET $path"
+            def file = new File(root, path.substring(1))
+            if (file.isDirectory()) {
+                file = new File(file, "index.html")
+            }
+            if (file.exists()) {
+                exchange.responseHeaders.set("Content-Type", TYPES[file.name.split(/\./)[-1]] ?: "text/plain")
+                exchange.sendResponseHeaders(200, 0)
+                file.withInputStream {
+                    exchange.responseBody << it
+                }
+                exchange.responseBody.close()
+            } else {
+                exchange.sendResponseHeaders(404, 0)
+                exchange.responseBody.close()
+            }
+        } catch (e) {
+            e.printStackTrace()
+        }
+    } as HttpHandler)
+    server.start()
+    println "started simple web server on port ${port}"
+
+    def cmd = "docker run --rm --net=host -v $project.buildDir/asciidoc/revealjs:/pwd astefanutti/decktape reveal http://localhost:$port/index.html?fragments=false /pwd/${project.name}.pdf"
+    Process proc = cmd.execute()
+    println "exporting to pdf"
+    proc.waitForProcessOutput(System.out, System.err)
+    proc.waitFor()
+    server.stop(0)
+    println "stopped simple web server on port ${port}"
+}
+
+asciidoctor.finalizedBy configureChalkboard

@@ -1,0 +1,30 @@
+
+== Using custom components
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/CustomComponentsDemo.groovy[tags=code1]
+----
+
+== Using custom components
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/CustomComponentsDemo.groovy[tags=code2]
+----
+
+== Using custom components
+
+image::CustomComponentsDemo.png[role=centered]
+
+== Own Factories
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/CustomFactoryDemo.groovy[tags=code]
+----
+
+== Own Factories
+
+image::CustomFactoryDemo.png[role=centered]
+

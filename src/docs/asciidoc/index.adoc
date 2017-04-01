@@ -1,0 +1,41 @@
+= GroovyFX - Groove JavaFX
+Alexander Klein <alexander.klein@codecentric.de>
+2016-07-13
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../java]
+
+include::aboutMe.adoc[]
+
+[[_chapterGreen]]
+== What is GroovyFX
+include::groovyfx.adoc[]
+
+[[Domain_chapterBlue]]
+== Forms and components
+include::forms.adoc[]
+
+[[Domain_chapterOrange]]
+== Graphics and animations
+include::graphics.adoc[]
+
+[[Domain_chapterViolet]]
+== Enhancing GroovyFX
+include::enhancing.adoc[]
+
+== Think Big
+
+image::griffon-banner-large.png[role=centered]
+
+[%step]
+* Application Framework
+[%step]
+** Java, Groovy and Kotlin
+** JavaFX, Swing, Pivot, Lanterna
+* MVC, MVVC, PresentationModel
+* a lot of usefull stuff
+* http://griffon-framework.org
+
+include::questions.adoc[]
+

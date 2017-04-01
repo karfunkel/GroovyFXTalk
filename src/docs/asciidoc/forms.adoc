@@ -1,0 +1,126 @@
+== Simple Form
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/SimpleForm.groovy[tags=code]
+----
+
+== Simple Form
+
+image::SimpleForm.png[role=centered]
+
+== Binding
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/SimpleFormBinding.groovy[tags=code]
+----
+
+== Binding
+
+image::SimpleFormBinding.png[role=centered]
+
+== Bean Binding
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/BeanBinding.groovy[tags=code]
+----
+
+== Bean Binding
+
+image::BeanBinding.png[role=centered]
+
+== Layouting
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/BorderPane.groovy[tags=code]
+----
+
+== Layouting
+
+image::BorderPane.png[role=centered]
+
+== GridLayout
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/GridLayout.groovy[tags=code]
+----
+
+== GridLayout
+
+image::GridLayout.png[role=centered]
+
+== Lists
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/ListDemo.groovy[tags=code]
+----
+
+== Lists
+
+image::ListDemo.png[role=centered]
+
+== Colors
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/TableDemo.groovy[tags=colors]
+----
+
+== Tables
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/TableDemo.groovy[tags=code]
+----
+
+== Tables
+
+image::TableDemo.png[role=centered]
+
+== Actions
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/Actions.groovy[tags=actions]
+----
+
+== Actions
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/Actions.groovy[tags=menu]
+----
+
+== Actions
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/Actions.groovy[tags=code]
+----
+
+== Actions
+
+image::Actions.png[role=centered]
+
+== Charts
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/ChartDemo.groovy[tags=pie]
+----
+
+== Charts
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/ChartDemo.groovy[tags=code]
+----
+
+== Charts
+
+==== DEMO

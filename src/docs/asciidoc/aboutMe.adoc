@@ -1,0 +1,27 @@
+
+[[AboutMe_person]]
+== About me
+
+image::speaker.jpg[role="cc-person"]
+
+[role='speaker']
+Alexander Klein
+
+[role='title']
+Branchmanager
+
+[role='address']
+codecentric AG +
+Curiestr. 2 +
+70563 Stuttgart, Germany
+
+[role='communication']
+image:../theme/images/fa-phone.png[role="icon"] +49 (0) 172 529 40 20 +
+image:../theme/images/ion-email.png[role="icon"] alexander.klein@codecentric.de
+
+[role='web']
+image:../theme/images/lsf-web.png[role="icon"] www.codecentric.de +
+image:../theme/images/brandico-blogger.png[role="icon"] blog.codecentric.de
+
+[role='twitter']
+image:../theme/images/fa-twitter.png[role="icon"] @saschaklein

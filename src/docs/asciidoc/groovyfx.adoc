@@ -1,0 +1,53 @@
+
+== GroovyFX
+
+[%step]
+* library for JavaFX using Groovy
+* Groovy Builder Pattern
+* DSL on top of JavaFX
+[%step]
+** declarative
+** simpler to write
+** easier to read
+** more natural
+* http://groovyfx.org
+* https://github.com/groovyfx-project/groovyfx
+* http://groovy.jmiguel.eu/groovy.codehaus.org/GroovyFX.html
+
+== Example
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/HelloGroovyFX.groovy[tags=code]
+----
+
+== Example
+
+image::HelloGroovyFX.png[role=centered]
+
+
+== Simple Scene
+
+* {nbsp}
++
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/Simple.groovy[tags=code]
+----
+
+[%step]
+* General contract
++
+[source, groovy]
+----
+[container name](value?, attributes*) {
+    [subcontainer name](value?, attributes*) {
+        [node name](value?, attributes*)
+    }
+}
+----
+
+== Simple Scene
+
+image::Simple.png[role=centered]
+

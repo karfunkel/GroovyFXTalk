@@ -1,0 +1,6 @@
+build
+.idea
+.lazybones
+.gradletasknamecache
+.gradle
+.DS_Store

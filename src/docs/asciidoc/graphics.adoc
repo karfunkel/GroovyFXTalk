@@ -1,0 +1,72 @@
+
+== Paths
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/PathDemo.groovy[tags=start]
+----
+
+== Paths
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/PathDemo.groovy[tags=code1]
+----
+
+== Paths
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/PathDemo.groovy[tags=code2]
+----
+
+== Paths
+
+image::PathDemo.png[role=centered]
+
+== Shapes
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/ShapeDemo.groovy[tags=code1]
+----
+
+== Shapes and Animations
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/ShapeDemo.groovy[tags=code2]
+----
+
+== Shapes
+
+image::ShapeDemo.png[role=centered]
+
+== Effects
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/AnimatedBackground.groovy[tags=code1]
+----
+
+== Animated Objects
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/AnimatedBackground.groovy[tags=code2]
+----
+
+== Animated Background
+
+[source, groovy]
+----
+include::{sourcedir}/groovyfx/AnimatedBackground.groovy[tags=code3]
+----
+
+== Animations
+
+image::AnimatedBackground.png[role=centered]
+
+== Animations
+
+==== DEMO

@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+<script>
+    $(document).ready(function()  {
+        $("section").each(function() {
+            if(!$(this).children("h1").length && !$(this).hasClass("stack"))
+                $(this).append("<div class='cc-footer'> <div class='cc-logo'/> </div>");
+        });
+    });
+</script>
+
+<style>
+    .reveal pre {
+        font-size: 0.45em;
+        line-height: 1.3em;
+    }
+
+    #example pre,
+    #actions pre,
+    #actions-2 pre,
+    #actions-3 pre,
+    #paths-2 pre,
+    #paths-3 pre
+    {
+        font-size: 0.42em;
+        line-height: 1.1em;
+    }
+
+    #charts-3 h3,
+    #animations-2 h3
+    {
+        text-align: center;
+        margin-top: 20%;
+    }
+</style>

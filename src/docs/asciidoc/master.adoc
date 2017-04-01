@@ -1,0 +1,58 @@
+= Presentation Master_
+Alexander Klein <alexander.klein@codecentric.de>
+2016-07-13
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../java]
+
+[[SlideID]]
+== Title-Header
+
+==== Eyecatcher 1
+
+===== Eyecatcher 2
+
+[%step]
+* This is a user manual for an example project.
+* This project does something.
+* We just haven't decided what that is yet....
+
+[[Chapter1Slide_chapterBlue]]
+== Main title of the amazing New Chapter 1
+
+[[Chapter2Slide_chapterGreen]]
+=== Main title of the amazing New Chapter 2
+
+[[Chapter3Slide_chapterViolet]]
+== Main title of the amazing New Chapter 3
+
+[[Chapter4Slide_chapterOrange]]
+== Main title of the amazing New Chapter 4
+
+[[PersonSlide_person]]
+== Questions?
+
+image::speaker.jpg[role="cc-person"]
+
+[role='speaker']
+Alexander Klein
+
+[role='title']
+Branchmanager
+
+[role='address']
+codecentric AG +
+Curiestr. 2 +
+70563 Stuttgart, Germany
+
+[role='communication']
+image:../theme/images/fa-phone.png[role="icon"] +49 (0) 172 529 40 20 +
+image:../theme/images/ion-email.png[role="icon"] alexander.klein@codecentric.de
+
+[role='web']
+image:../theme/images/lsf-web.png[role="icon"] www.codecentric.de +
+image:../theme/images/brandico-blogger.png[role="icon"] blog.codecentric.de
+
+[role='twitter']
+image:../theme/images/fa-twitter.png[role="icon"] @saschaklein

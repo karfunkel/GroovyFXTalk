@@ -1,0 +1,18 @@
+.root {
+    -fx-background: WHITE;
+    -fx-font-family: sans-serif;
+    -fx-font-size: 12pt;
+    -fx-padding: 5px;
+}
+
+.label {
+    -fx-padding: 5px;
+}
+
+.big {
+    -fx-font-size: 20pt;
+}
+
+.image-view {
+    -fx-padding: 10px;
+}
